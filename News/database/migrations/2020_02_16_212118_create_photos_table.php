@@ -18,7 +18,7 @@ class CreatePhotosTable extends Migration
             $table->unsignedBigInteger('article_id');
             $table->string('file_path');
             $table->timestamps();
-            $table->foreign('article_id')->references('articles')->on('articles');
+            $table->foreign('article_id')->references('id')->on('articles');
             $table->softDeletes();
 
         });

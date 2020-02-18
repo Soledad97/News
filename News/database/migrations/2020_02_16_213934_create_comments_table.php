@@ -17,13 +17,12 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('user_id');
-            $table->tinyInteger('rating')->unsigned();
+            $table->unsignedTinyInteger('rating')->nullable();
             $table->text('content');
             $table->timestamps();
-            $table->foreign('article_id')->references('articles')->on('articles');
-            $table->foreign('user_id')->references('users')->on('users');
+            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
-
         });
     }
 
