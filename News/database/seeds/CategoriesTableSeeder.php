@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class CategoriesTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $categories = array(
+            ['name' => 'Policial'],
+            ['name' => 'Economia'],
+            ['name' => 'Espectaculos']);
+        foreach($categories as $category)
+        {
+          Category::insert($category);
+        }
+    }
+}
