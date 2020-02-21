@@ -4,13 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Favorite;
-use App\Article;
-use App\User;
-
-;
-
-class FavoriteController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +13,11 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        
+        $categories = Category::all();
+        return view('website.category.index', [
+            'title' => 'Categorias',
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -51,10 +49,10 @@ class FavoriteController extends Controller
      */
     public function show($id)
     {
-        $favorites = Favorites::find($id);
-        return view('website.favorite.show', [
-            'favorites' => $favorites, 
-        ]);
+        $categories = Category :: findOrFail($id);
+        return view('website.category.show'.[
+            'categories'=> $categories
+        ])
     }
 
     /**
