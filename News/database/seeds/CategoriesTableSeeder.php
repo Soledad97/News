@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Category;
 class CategoriesTableSeeder extends Seeder
 {
     /**
@@ -14,7 +14,9 @@ class CategoriesTableSeeder extends Seeder
         $categories = array(
             ['name' => 'Policial'],
             ['name' => 'Economia'],
-            ['name' => 'Espectaculos']);
+            ['name' => 'Politica'],
+            ['name' => 'Sociedad'],
+            ['name' => 'Deportes']);
         foreach($categories as $category)
         {
           Category::insert($category);

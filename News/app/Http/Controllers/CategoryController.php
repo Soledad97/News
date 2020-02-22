@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Category;
+use App\Article;
+
 class CategoryController extends Controller
 {
     /**
@@ -50,9 +53,9 @@ class CategoryController extends Controller
     public function show($id)
     {
         $categories = Category :: findOrFail($id);
-        return view('website.category.show'.[
+        return view('website.category.show'. [
             'categories'=> $categories
-        ])
+        ]);
     }
 
     /**

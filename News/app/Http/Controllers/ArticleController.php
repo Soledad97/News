@@ -4,7 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+use App\Article;
+use App\Category;
+use App\User;
+use App\Favorite;
+use App\Visit;
+use App\Comment;
+
+class ArticleController extends Controller  
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +20,14 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $article = Article::orderBy ('timestamps', 'DESC')->paginate(10);
+        return view('website.article.index', [
+            'article' => $articles,
+            'categories', $categories,
+            'user', $user,
+            'comments', $comments
+
+        ]);
     }
 
     /**
@@ -23,7 +37,11 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('redactor.article.create',
+        [
+            'categories' => Category::all(),
+            'article' => New Article
+        ]);
     }
 
     /**
@@ -34,7 +52,23 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate ($request,
+        [
+            'title' => 'required', 
+            'excerpt' => 'required',
+            'content' => 'required'
+        ]);
+        
+        $article = New Article;
+        $article->title = $request->get('title');
+        $article->excertp = $request->get('excerpt');
+        $article->content = $request->get('content');
+        $article->save();
+
+        if ($request->has('categories')){
+            $article->categories()->attach($request->get('categories'));
+        }
+        return redirect('article/' . $article->id);
     }
 
     /**
@@ -44,8 +78,19 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   //logued???
+        $article = Article :: findOrFail($id);
+        $favorites = Favorite :: where ('article_id', $id);
+        $comments = Comment :: where ('article_id', $id);
+        $visits = Visit :: where ('article_id', $id);
+        return view('website.article.show', [
+            'article' => $article,
+            'user' => $logued,
+            'favorites' => $favorites,
+            'comments' => $comments,
+            'visits' => $visits
+
+        ]);
     }
 
     /**
@@ -56,7 +101,10 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('redactor.article.show', [
+            'categories' => Category::all(),
+            'article' => Article::FindOrFail($id),
+        ]);
     }
 
     /**
@@ -67,8 +115,19 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   $this->$validate ($request,
+        [
+            'title' => 'required', 
+            'excerpt' => 'required',
+            'content' => 'required',
+        ]);
+
+        $article = Article::find($id);
+        $article -> save();
+        $article->update($request->all());
+
+        return redirect('article/' . $article->id);
+        
     }
 
     /**
@@ -79,6 +138,9 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article :: findOrFail($id);
+        $article->delete();
+
+        return redirect('/article');
     }
 }

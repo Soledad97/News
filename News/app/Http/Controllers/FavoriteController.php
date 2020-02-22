@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Favorite;
-use App\Article;
 use App\User;
+use App\Category;
+use App\Article;
+
 
 ;
 
@@ -29,7 +31,9 @@ class FavoriteController extends Controller
      */
     public function create()
     {
-        //
+        return view('lector.favorite.create', [
+            'favorite' => New Favorite
+        ]);
     }
 
     /**
@@ -40,9 +44,12 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $favorite = New Favorite;
+            'user_id' => $request->user_id;
+            'article_id' => $request->article_id; 
     }
-
+           $favorite->save();
+           return redirect('/');
     /**
      * Display the specified resource.
      *
@@ -52,7 +59,7 @@ class FavoriteController extends Controller
     public function show($id)
     {
         $favorites = Favorites::find($id);
-        return view('website.favorite.show', [
+        return view('lector.favorite.show', [
             'favorites' => $favorites, 
         ]);
     }

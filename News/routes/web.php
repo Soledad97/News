@@ -65,3 +65,6 @@ Route::get('/usertype/{id}', 'UserTypeController@show');
 Route::get('/usertype/{id}/edit', 'UserTypeController@edit');
 Route::patch('/usertype/{id}', 'UserTypeController@update');
 Route::delete('/usertype/{id}', 'UserTypeController@destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
