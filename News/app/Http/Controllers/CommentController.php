@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Favorite;
+use App\User;
+use App\Category;
+use App\Article;
 
 class CommentController extends Controller
 {
@@ -23,7 +27,9 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('lector.comment.create', [
+            'comment' => New Comment
+        ]);
     }
 
     /**
@@ -34,7 +40,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment = Newcomment :: create([
+            'user_id' => $request->user_id,
+            'article_id' => $request->article_id 
+            ]);
+    
+           $comment->save();
+           return redirect('/');
     }
 
     /**

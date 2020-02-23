@@ -43,13 +43,15 @@ class FavoriteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-            $favorite = New Favorite;
-            'user_id' => $request->user_id;
-            'article_id' => $request->article_id; 
-    }
+    {       //corregir el newfavorite porue no es un modelo
+            $favorite = NewFavorite :: create([
+            'user_id' => $request->user_id,
+            'article_id' => $request->article_id 
+            ]);
+    
            $favorite->save();
            return redirect('/');
+    }
     /**
      * Display the specified resource.
      *
@@ -58,7 +60,7 @@ class FavoriteController extends Controller
      */
     public function show($id)
     {
-        $favorites = Favorites::find($id);
+        $favorites = Favorite::find($id);
         return view('lector.favorite.show', [
             'favorites' => $favorites, 
         ]);

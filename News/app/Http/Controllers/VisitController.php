@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Favorite;
+use App\User;
+use App\Category;
+use App\Article;
 
 class VisitController extends Controller
 {
@@ -23,7 +27,9 @@ class VisitController extends Controller
      */
     public function create()
     {
-        //
+        return view('lector.visit.create', [
+            'visit' => New Visit
+        ]);
     }
 
     /**
@@ -34,7 +40,13 @@ class VisitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $visit = NewVisit :: create([
+            'user_id' => $request->user_id,
+            'article_id' => $request->article_id 
+            ]);
+    
+           $visit->save();
+           return redirect('/');
     }
 
     /**
@@ -45,7 +57,10 @@ class VisitController extends Controller
      */
     public function show($id)
     {
-        //
+        $visit = Visit::find($id);
+        return view('lector.visit.show', [
+            'visit' => $visit, 
+        ]);
     }
 
     /**

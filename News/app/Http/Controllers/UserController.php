@@ -13,7 +13,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('website.user.index',[
+            'title' => 'Todos los usuarios',
+            'users' => $users
+        ]);
     }
 
     /**
@@ -45,7 +49,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $logued = \ Auth :: user();
+        if(auth()->user()->type = 'Redactor'){
+            return view('redactor.profile.show', [
+                'user' => $logued,
+             ]);
+        }else{
+            return view('lector.profile.show', [
+                'user' => $logued,
+            ]);
+        }
     }
 
     /**
@@ -68,8 +81,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $this->validate ($request,
+        [
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'avatar' => 'nullable',
+        'email' => 'required',
+        'password' => 'required',
+        'user_type_id' =>'required',
+        ]);
+        $user = User::find($id);
+        $user->update($request->all());
+        $user->save();
+        return redirect('/');
+      }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +105,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+      $user->delete();
+
+      return redirect('/');
     }
 }
